@@ -22,7 +22,7 @@ npm run dev
 
 | Route | Description | Backing Payload Collection / Global |
 | --- | --- | --- |
-| `/` & `/home` | English Homepage (Hero slider, COVID screening card, Give section, Leadership cards & quotes, Bible Verse of the Day, Sanctuary map) | `hero-slides`, `home-page`, `site-settings` |
+| `/` & `/home` | English Homepage (Hero slider, Give section, Leadership cards & quotes, Bible Verse of the Day, Sanctuary map) | `hero-slides`, `home-page`, `site-settings` |
 | `/accueil` | French Homepage | `hero-slides` (`locale = fr`), `home-page` |
 | `/about-us` | Circular photo banner, About Us, Ministries & Departments, What We Believe, Mission + Vision | `about-page`, `ministries` |
 | `/books` & `/books/[slug]` | Searchable Bookshop catalog & single book detail view | `books` |

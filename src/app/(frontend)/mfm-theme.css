@@ -448,7 +448,7 @@ nav.mobile-menu .close-button {
 }
 
 /* ==========================================================================
-   Homepage Info Cards, COVID Screening, Give, Leadership, Verse, Map
+   Homepage Info Cards, Give, Leadership, Verse, Map
    ========================================================================== */
 
 .mfm-info-card {
@@ -504,44 +504,6 @@ nav.mobile-menu .close-button {
   margin-bottom: 0;
 }
 
-.mfm-covid {
-  background-image: radial-gradient(
-      circle at 52% 84%,
-      rgba(194, 194, 194, 0.06) 0%,
-      rgba(194, 194, 194, 0.06) 18%,
-      transparent 18%,
-      transparent 100%
-    ),
-    radial-gradient(
-      circle at 27% 63%,
-      rgb(224, 186, 253) 0%,
-      rgb(224, 186, 253) 30%,
-      transparent 30%,
-      transparent 100%
-    ),
-    radial-gradient(
-      circle at 2% 91%,
-      rgb(221, 195, 251) 0%,
-      rgb(221, 195, 251) 29%,
-      transparent 29%,
-      transparent 100%
-    ),
-    linear-gradient(90deg, rgb(221, 195, 251), rgb(221, 195, 251));
-}
-
-.mfm-covid .mfm-info-head {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-}
-
-.mfm-covid img {
-  width: 10rem;
-  height: auto;
-}
-
-.mfm-covid a,
 .mfm-info-card a {
   display: inline-block;
   text-decoration: none;
@@ -559,15 +521,8 @@ nav.mobile-menu .close-button {
   transition: background-color 0.2s ease;
 }
 
-.mfm-covid a:hover,
 .mfm-info-card a:hover {
   background-color: rgb(119, 3, 3);
-}
-
-.mfm-covid p {
-  font-style: normal;
-  font-size: 1.5rem;
-  text-align: justify;
 }
 
 /* Give / Donate section */
@@ -2193,22 +2148,8 @@ footer .copy-right {
     width: 10rem;
   }
 
-  .mfm-covid .mfm-info-head {
-    justify-content: space-around;
-    padding: 2rem;
-  }
-
-  .mfm-covid img {
-    width: 15rem;
-  }
-
-  .mfm-covid a,
   .mfm-info-card a {
     font-size: 1.6rem;
-  }
-
-  .mfm-covid p {
-    font-size: 1.8rem;
   }
 
   .donate-message {
@@ -2278,20 +2219,7 @@ footer .copy-right {
     text-transform: capitalize;
   }
 
-  .mfm-covid .mfm-info-head {
-    flex-direction: row;
-  }
-
-  .mfm-covid img {
-    width: 20rem;
-  }
-
-  .mfm-covid a,
   .mfm-info-card a {
-    font-size: 2rem;
-  }
-
-  .mfm-covid p {
     font-size: 2rem;
   }
 
