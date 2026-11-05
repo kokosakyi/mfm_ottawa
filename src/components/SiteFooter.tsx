@@ -29,6 +29,9 @@ export function SiteFooter({
   designerUrl,
   socialLinks,
 }: SiteFooterProps) {
+  const currentYear = new Date().getFullYear()
+  const displayCopyright = copyright.replace(/\b20\d{2}\b/, String(currentYear))
+
   return (
     <footer>
       <div className="social-media">
@@ -137,7 +140,7 @@ export function SiteFooter({
           <p>{phone}</p>
         </div>
 
-        <p className="copy-right">{copyright}</p>
+        <p className="copy-right">{displayCopyright}</p>
 
         <div className="footer-privacy-policy">
           <Link href="/privacy-policy">Privacy Policy</Link>

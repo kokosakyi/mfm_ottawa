@@ -80,6 +80,52 @@ export function HomeView({
     <>
       <HeroSlider slides={slides} locale={locale} />
 
+      <section
+        className="mfm-visitor-strip"
+        aria-label={isFr ? 'Informations sur les cultes' : 'Service information'}
+      >
+        <div className="mfm-visitor-strip__inner">
+          <div className="mfm-visitor-strip__item">
+            <span className="mfm-visitor-strip__label">
+              {isFr ? 'Culte du dimanche' : 'Sunday Service'}
+            </span>
+            <strong className="mfm-visitor-strip__value">
+              {isFr ? '10h00 — En personne et en ligne' : '10:00 AM — In-Person & Online'}
+            </strong>
+          </div>
+
+          <div className="mfm-visitor-strip__divider" aria-hidden="true" />
+
+          <div className="mfm-visitor-strip__item">
+            <span className="mfm-visitor-strip__label">
+              {isFr ? 'Notre sanctuaire' : 'Sanctuary Location'}
+            </span>
+            <strong className="mfm-visitor-strip__value">
+              2723 Lancaster Rd, Suite 101, Ottawa
+            </strong>
+          </div>
+
+          <div className="mfm-visitor-strip__actions">
+            <a
+              href={directionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mfm-visitor-strip__btn mfm-visitor-strip__btn--primary"
+            >
+              {isFr ? 'Itinéraire' : 'Plan a Visit'}
+            </a>
+            <a
+              href="https://www.youtube.com/@mfmottawalive4271/streams"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mfm-visitor-strip__btn mfm-visitor-strip__btn--outline"
+            >
+              {isFr ? 'En direct' : 'Watch Live'}
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section className="mfm-donate">
         <img
           src={donateSection.seedlingIconUrl || '/assets/home/seedling.png'}
@@ -233,6 +279,7 @@ export function HomeView({
             className="mfm-map-frame"
             title="MFM Ottawa Sanctuary Location Map"
             src={mapEmbedUrl}
+            loading="lazy"
           />
         </div>
       </section>
