@@ -11,56 +11,6 @@ export const HomePage: GlobalConfig = {
   },
   fields: [
     {
-      name: 'covidScreening',
-      type: 'group',
-      label: 'Sanctuary Screening / Announcement Card',
-      fields: [
-        { name: 'enabled', type: 'checkbox', defaultValue: true },
-        {
-          name: 'topMessage',
-          type: 'textarea',
-          defaultValue:
-            'The purpose of this Screening Tool is to help you determine whether you should attend in-person services at MFM-Ottawa.',
-        },
-        {
-          name: 'topMessageFr',
-          type: 'textarea',
-          defaultValue:
-            'Le but de cet outil est de vous aider à déterminer, si oui ou non, vous devriez venir assister en présentiel aux cultes aux Ministères de la Montagne de Feu et des Miracles (MFM) à Ottawa.',
-        },
-        {
-          name: 'buttonText',
-          type: 'text',
-          defaultValue: 'Complete COVID Screening Form',
-        },
-        {
-          name: 'buttonTextFr',
-          type: 'text',
-          defaultValue: 'REMPLIR LE FORMULAIRE DE DÉPISTAGE DE LA COVID',
-        },
-        {
-          name: 'formUrl',
-          type: 'text',
-          defaultValue:
-            'https://docs.google.com/forms/d/1s_QbVm7udYWRhQV9I0EltwO1yKJ58dEHfPTfBureUzY/edit?usp=sharing',
-        },
-        {
-          name: 'bottomMessage',
-          type: 'textarea',
-          defaultValue:
-            'This tool must be completed prior to entering the MFM-Ottawa Sanctuary. Anyone who does not pass screening must not enter the MFM-Ottawa Sanctuary and should self-isolate, then contact their healthcare provider or Telehealth Ontario at 1-866-797-0000 to find out if they need a COVID-19 test. This tool is subject to change as further guidance from Ottawa Public Health, the Ministry of Health and evidence related to COVID-19 risks becomes available. Please note that masks are mandatory when on the Church premises.',
-        },
-        {
-          name: 'bottomMessageFr',
-          type: 'textarea',
-          defaultValue:
-            "Ce formulaire doit être rempli avant d’entrer dans le sanctuaire au MFM -Ottawa. Toute personne qui présente des symptômes ou qui a échoué à ce dépistage préliminaire ne devrait pas entrer dans le sanctuaire et devrait s’isoler, et ensuite contacter son professionnel de soins de santé ou Télésanté Ontario au 1-866-797-0000 pour savoir si elle a besoin d'un test de dépistage du COVID-19. Cet outil est susceptible de changement au fur et à mesure que de nouvelles directives de la Santé publique Ottawa, du ministère de la Santé et des preuves relatives aux risques du COVID-19 deviennent disponibles. Veuillez noter que le port du masque est obligatoire dans les locaux de l'église.",
-        },
-        { name: 'maskIconUrl', type: 'text', defaultValue: '/assets/home/mask.png' },
-        { name: 'covidIconUrl', type: 'text', defaultValue: '/assets/home/covid.png' },
-      ],
-    },
-    {
       name: 'donateSection',
       type: 'group',
       fields: [

@@ -35,7 +35,6 @@ export async function fetchHomeViewProps(locale: 'en' | 'fr') {
   return {
     locale,
     slides,
-    covidScreening: homePage.covidScreening || {},
     donateSection: homePage.donateSection || {},
     leadershipSection: {
       generalOverseer: {

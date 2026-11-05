@@ -5,18 +5,6 @@ import { HeroSlider, type HeroSlideItem } from './HeroSlider'
 interface HomeViewProps {
   locale: 'en' | 'fr'
   slides: HeroSlideItem[]
-  covidScreening: {
-    enabled?: boolean | null
-    topMessage?: string | null
-    topMessageFr?: string | null
-    buttonText?: string | null
-    buttonTextFr?: string | null
-    formUrl?: string | null
-    bottomMessage?: string | null
-    bottomMessageFr?: string | null
-    maskIconUrl?: string | null
-    covidIconUrl?: string | null
-  }
   donateSection: {
     heading?: string | null
     headingFr?: string | null
@@ -74,7 +62,6 @@ interface HomeViewProps {
 export function HomeView({
   locale,
   slides,
-  covidScreening,
   donateSection,
   leadershipSection,
   verseOfTheDay,
@@ -92,59 +79,6 @@ export function HomeView({
   return (
     <>
       <HeroSlider slides={slides} locale={locale} />
-
-      {covidScreening.enabled !== false && (
-        <section className="mfm-info-card mfm-covid">
-          <div className="mfm-info-card-text">
-            <div className="covid-message">
-              <p>
-                {isFr
-                  ? covidScreening.topMessageFr || covidScreening.topMessage
-                  : covidScreening.topMessage}
-              </p>
-            </div>
-          </div>
-
-          <div className="mfm-info-head">
-            <img
-              src={covidScreening.maskIconUrl || '/assets/home/mask.png'}
-              alt="Mask icon"
-              loading="lazy"
-              width={200}
-              height={200}
-            />
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={
-                covidScreening.formUrl ||
-                'https://docs.google.com/forms/d/1s_QbVm7udYWRhQV9I0EltwO1yKJ58dEHfPTfBureUzY/edit?usp=sharing'
-              }
-            >
-              {isFr
-                ? covidScreening.buttonTextFr || covidScreening.buttonText
-                : covidScreening.buttonText}
-            </a>
-            <img
-              src={covidScreening.covidIconUrl || '/assets/home/covid.png'}
-              alt="Screening icon"
-              loading="lazy"
-              width={200}
-              height={200}
-            />
-          </div>
-
-          <div className="mfm-info-card-text">
-            <div className="covid-message">
-              <p>
-                {isFr
-                  ? covidScreening.bottomMessageFr || covidScreening.bottomMessage
-                  : covidScreening.bottomMessage}
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
 
       <section className="mfm-donate">
         <img

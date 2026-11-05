@@ -720,18 +720,6 @@ export interface SiteSetting {
  */
 export interface HomePage {
   id: number;
-  covidScreening?: {
-    enabled?: boolean | null;
-    topMessage?: string | null;
-    topMessageFr?: string | null;
-    buttonText?: string | null;
-    buttonTextFr?: string | null;
-    formUrl?: string | null;
-    bottomMessage?: string | null;
-    bottomMessageFr?: string | null;
-    maskIconUrl?: string | null;
-    covidIconUrl?: string | null;
-  };
   donateSection?: {
     heading?: string | null;
     headingFr?: string | null;
@@ -943,20 +931,6 @@ export interface SiteSettingsSelect<T extends boolean = true> {
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
-  covidScreening?:
-    | T
-    | {
-        enabled?: T;
-        topMessage?: T;
-        topMessageFr?: T;
-        buttonText?: T;
-        buttonTextFr?: T;
-        formUrl?: T;
-        bottomMessage?: T;
-        bottomMessageFr?: T;
-        maskIconUrl?: T;
-        covidIconUrl?: T;
-      };
   donateSection?:
     | T
     | {
