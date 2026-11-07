@@ -80,7 +80,8 @@ export default buildConfig({
           generateFileURL: process.env.R2_PUBLIC_URL
             ? ({ filename, prefix }) => {
                 const base = process.env.R2_PUBLIC_URL!.replace(/\/$/, '')
-                return prefix ? `${base}/${prefix}/${filename}` : `${base}/${filename}`
+                const cleanFilename = encodeURI(filename)
+                return prefix ? `${base}/${prefix}/${cleanFilename}` : `${base}/${cleanFilename}`
               }
             : undefined,
         },
