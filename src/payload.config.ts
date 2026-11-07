@@ -76,7 +76,14 @@ export default buildConfig({
   plugins: [
     s3Storage({
       collections: {
-        media: true,
+        media: {
+          generateFileURL: process.env.R2_PUBLIC_URL
+            ? ({ filename, prefix }) => {
+                const base = process.env.R2_PUBLIC_URL!.replace(/\/$/, '')
+                return prefix ? `${base}/${prefix}/${filename}` : `${base}/${filename}`
+              }
+            : undefined,
+        },
       },
       bucket: process.env.S3_BUCKET || '',
       config: {

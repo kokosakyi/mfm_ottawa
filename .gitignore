@@ -31,3 +31,6 @@ next-env.d.ts
 *.db-shm
 *.db-wal
 /media
+
+# wrangler / cloudflare local state
+.wrangler/
