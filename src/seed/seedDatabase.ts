@@ -24,6 +24,18 @@ export async function ensureSeeded(payload: Payload): Promise<void> {
     try {
       const existingSlides = await payload.count({ collection: 'hero-slides' })
       if (existingSlides.totalDocs > 0) {
+        // Ensure any new seed events exist
+        try {
+          const eventsRes = await payload.find({ collection: 'events', limit: 100 })
+          const existingSlugs = new Set(eventsRes.docs.map((e) => e.slug))
+          for (const ev of SEED_EVENTS) {
+            if (!existingSlugs.has(ev.slug)) {
+              await payload.create({ collection: 'events', data: ev })
+            }
+          }
+        } catch {
+          // ignore
+        }
         return
       }
 
@@ -118,7 +130,7 @@ export async function ensureSeeded(payload: Payload): Promise<void> {
             },
           },
           privacyBanner: {
-            enabled: true,
+            enabled: false,
             prefixText: 'By using this site, you agree to our ',
             policyLinkText: 'Privacy Policy',
             policyUrl: '/privacy-policy',
@@ -137,6 +149,18 @@ export async function ensureSeeded(payload: Payload): Promise<void> {
       await payload.updateGlobal({
         slug: 'home-page',
         data: {
+          visitorStrip: {
+            serviceName: 'Sunday Service',
+            serviceNameFr: 'Culte du dimanche',
+            serviceTime: '10:00 AM — In-Person & Online',
+            serviceTimeFr: '10h00 — En personne et en ligne',
+            sanctuaryLabel: 'Sanctuary Location',
+            sanctuaryLabelFr: 'Notre sanctuaire',
+            sanctuaryAddress: '2723 Lancaster Rd, Suite 101, Ottawa',
+            watchLiveUrl: 'https://www.youtube.com/@mfmottawalive4271/streams',
+            directionsUrl:
+              'https://www.google.com/maps/search/?api=1&query=2723+Lancaster+Road+Suite+101+Ottawa+ON+K1B+0B1',
+          },
           donateSection: {
             heading: 'Give',
             headingFr: 'DONS',
@@ -158,7 +182,7 @@ export async function ensureSeeded(payload: Payload): Promise<void> {
               name: 'Dr. D. K. Olukoya',
               title: '(General Overseer, MFM Worldwide)',
               spouseName: 'Pastor (Mrs.) Shade Olukoya',
-              imageUrl: '/assets/home/gen_overseer.jpg',
+              imageUrl: '/assets/home/dr_olukoya_and_wife.jpeg',
             },
             regionalOverseer: {
               name: 'Pastor Titus Babalola',
@@ -206,6 +230,24 @@ export async function ensureSeeded(payload: Payload): Promise<void> {
           devotionalButtonText: 'Continue to Daily Devotional',
           devotionalUrl: 'https://flatimes.com/mfm/',
           audioSermonsHeading: 'Audio Sermons',
+          audioSermons: [
+            {
+              title: 'Connecting to the God of Breakthroughs',
+              speaker: 'Dr. D. K. Olukoya',
+              date: 'PMCH Service',
+              videoUrl: 'https://www.youtube.com/@mfmottawalive4271/streams',
+              description:
+                'Powerful apostolic teaching and prophetic prayers to break stubborn yokes and release divine blessings.',
+            },
+            {
+              title: 'Walking in Holiness and Supernatural Victory',
+              speaker: 'Pastor Titus Babalola',
+              date: 'Sunday Service',
+              videoUrl: 'https://www.youtube.com/@mfmottawalive4271/streams',
+              description:
+                'Biblical foundation on holiness, warfare prayer eagles, and spiritual authority in Christ.',
+            },
+          ],
           areasServedHeading: 'Areas we serve:',
           areasServed: [
             { area: 'Ottawa East' },

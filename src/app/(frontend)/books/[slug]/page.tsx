@@ -54,6 +54,41 @@ export default async function SingleBookPage({ params }: SingleBookPageProps) {
       <h1 className="book-title">{book.title}</h1>
       <div className="author">Author: {book.author}</div>
 
+      <div
+        style={{
+          display: 'flex',
+          gap: '1.2rem',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: '1rem',
+          marginBottom: '1rem',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '2rem',
+            fontWeight: 800,
+            color: '#8f0f61',
+          }}
+        >
+          {(book as any).price || '$15.00 CAD'}
+        </span>
+        <span
+          style={{
+            fontSize: '1.3rem',
+            fontWeight: 700,
+            padding: '0.4rem 1rem',
+            borderRadius: '0.6rem',
+            backgroundColor:
+              (book as any).inStock !== false ? '#e8f5e9' : '#ffebee',
+            color:
+              (book as any).inStock !== false ? '#2e7d32' : '#c62828',
+          }}
+        >
+          {(book as any).inStock !== false ? 'In Stock' : 'Out of Stock'}
+        </span>
+      </div>
+
       <div className="book-description">
         <h3>About This Book</h3>
         <div className="content">
@@ -72,7 +107,11 @@ export default async function SingleBookPage({ params }: SingleBookPageProps) {
         }}
       >
         <Link
-          href="/contact-us"
+          href={`/contact-us?subject=${encodeURIComponent(
+            `Book Request: ${book.title}`,
+          )}&message=${encodeURIComponent(
+            `Hello, I would like to request/order "${book.title}" (Quantity: 1). Please let me know how to arrange payment and pickup/delivery.`,
+          )}`}
           style={{
             backgroundColor: 'rgb(149, 45, 3)',
             color: '#fff',

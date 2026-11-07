@@ -51,6 +51,18 @@ export const Books: CollectionConfig = {
       label: 'Static Cover Image Path',
     },
     {
+      name: 'price',
+      type: 'text',
+      label: 'Price (e.g. $15.00 CAD)',
+      defaultValue: '$15.00 CAD',
+    },
+    {
+      name: 'inStock',
+      type: 'checkbox',
+      label: 'In Stock',
+      defaultValue: true,
+    },
+    {
       name: 'description',
       type: 'textarea',
     },

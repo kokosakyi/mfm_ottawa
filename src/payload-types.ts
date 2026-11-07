@@ -223,6 +223,8 @@ export interface Book {
   language?: ('en' | 'fr' | 'bilingual') | null;
   coverImage?: (number | null) | Media;
   coverImageUrl: string;
+  price?: string | null;
+  inStock?: boolean | null;
   description?: string | null;
   order: number;
   updatedAt: string;
@@ -511,6 +513,8 @@ export interface BooksSelect<T extends boolean = true> {
   language?: T;
   coverImage?: T;
   coverImageUrl?: T;
+  price?: T;
+  inStock?: T;
   description?: T;
   order?: T;
   updatedAt?: T;
@@ -706,6 +710,7 @@ export interface SiteSetting {
     policyUrl?: string | null;
     acceptButtonText?: string | null;
   };
+  membershipFormUrl?: string | null;
   donatePage?: {
     canadaHelpsPageId?: string | null;
     canadaHelpsUrl?: string | null;
@@ -720,6 +725,17 @@ export interface SiteSetting {
  */
 export interface HomePage {
   id: number;
+  visitorStrip?: {
+    serviceName?: string | null;
+    serviceNameFr?: string | null;
+    serviceTime?: string | null;
+    serviceTimeFr?: string | null;
+    sanctuaryLabel?: string | null;
+    sanctuaryLabelFr?: string | null;
+    sanctuaryAddress?: string | null;
+    watchLiveUrl?: string | null;
+    directionsUrl?: string | null;
+  };
   donateSection?: {
     heading?: string | null;
     headingFr?: string | null;
@@ -794,24 +810,31 @@ export interface AboutPage {
       }[]
     | null;
   heading?: string | null;
+  headingFr?: string | null;
   paragraphs?:
     | {
         text: string;
+        textFr?: string | null;
         id?: string | null;
       }[]
     | null;
   ministriesHeading?: string | null;
+  ministriesHeadingFr?: string | null;
   beliefsHeading?: string | null;
+  beliefsHeadingFr?: string | null;
   beliefs?:
     | {
         item: string;
+        itemFr?: string | null;
         id?: string | null;
       }[]
     | null;
   missionHeading?: string | null;
+  missionHeadingFr?: string | null;
   missions?:
     | {
         item: string;
+        itemFr?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -830,6 +853,17 @@ export interface ConnectPage {
   devotionalButtonText?: string | null;
   devotionalUrl?: string | null;
   audioSermonsHeading?: string | null;
+  audioSermons?:
+    | {
+        title: string;
+        speaker?: string | null;
+        date?: string | null;
+        audioUrl?: string | null;
+        videoUrl?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   areasServedHeading?: string | null;
   areasServed?:
     | {
@@ -915,6 +949,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         policyUrl?: T;
         acceptButtonText?: T;
       };
+  membershipFormUrl?: T;
   donatePage?:
     | T
     | {
@@ -931,6 +966,19 @@ export interface SiteSettingsSelect<T extends boolean = true> {
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
+  visitorStrip?:
+    | T
+    | {
+        serviceName?: T;
+        serviceNameFr?: T;
+        serviceTime?: T;
+        serviceTimeFr?: T;
+        sanctuaryLabel?: T;
+        sanctuaryLabelFr?: T;
+        sanctuaryAddress?: T;
+        watchLiveUrl?: T;
+        directionsUrl?: T;
+      };
   donateSection?:
     | T
     | {
@@ -1017,25 +1065,32 @@ export interface AboutPageSelect<T extends boolean = true> {
         id?: T;
       };
   heading?: T;
+  headingFr?: T;
   paragraphs?:
     | T
     | {
         text?: T;
+        textFr?: T;
         id?: T;
       };
   ministriesHeading?: T;
+  ministriesHeadingFr?: T;
   beliefsHeading?: T;
+  beliefsHeadingFr?: T;
   beliefs?:
     | T
     | {
         item?: T;
+        itemFr?: T;
         id?: T;
       };
   missionHeading?: T;
+  missionHeadingFr?: T;
   missions?:
     | T
     | {
         item?: T;
+        itemFr?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -1053,6 +1108,17 @@ export interface ConnectPageSelect<T extends boolean = true> {
   devotionalButtonText?: T;
   devotionalUrl?: T;
   audioSermonsHeading?: T;
+  audioSermons?:
+    | T
+    | {
+        title?: T;
+        speaker?: T;
+        date?: T;
+        audioUrl?: T;
+        videoUrl?: T;
+        description?: T;
+        id?: T;
+      };
   areasServedHeading?: T;
   areasServed?:
     | T

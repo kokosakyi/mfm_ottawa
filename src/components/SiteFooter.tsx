@@ -10,6 +10,8 @@ interface SiteFooterProps {
   copyright: string
   designerName: string
   designerUrl: string
+  privacyPolicyText?: string
+  privacyPolicyUrl?: string
   socialLinks: {
     facebook?: string | null
     youtube?: string | null
@@ -27,6 +29,8 @@ export function SiteFooter({
   copyright,
   designerName,
   designerUrl,
+  privacyPolicyText = 'Privacy Policy',
+  privacyPolicyUrl = '/privacy-policy',
   socialLinks,
 }: SiteFooterProps) {
   const currentYear = new Date().getFullYear()
@@ -143,7 +147,7 @@ export function SiteFooter({
         <p className="copy-right">{displayCopyright}</p>
 
         <div className="footer-privacy-policy">
-          <Link href="/privacy-policy">Privacy Policy</Link>
+          <Link href={privacyPolicyUrl}>{privacyPolicyText}</Link>
         </div>
 
         <div className="footer-meta-links">

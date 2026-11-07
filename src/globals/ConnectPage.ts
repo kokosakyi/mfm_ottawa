@@ -41,6 +41,27 @@ export const ConnectPage: GlobalConfig = {
       defaultValue: 'Audio Sermons',
     },
     {
+      name: 'audioSermons',
+      type: 'array',
+      label: 'Sermons & Audio Messages',
+      fields: [
+        { name: 'title', type: 'text', required: true },
+        {
+          name: 'speaker',
+          type: 'text',
+          defaultValue: 'Dr. D. K. Olukoya',
+        },
+        { name: 'date', type: 'text' },
+        { name: 'audioUrl', type: 'text', label: 'Audio MP3 URL or Stream' },
+        {
+          name: 'videoUrl',
+          type: 'text',
+          label: 'YouTube Video or Stream URL',
+        },
+        { name: 'description', type: 'textarea' },
+      ],
+    },
+    {
       name: 'areasServedHeading',
       type: 'text',
       defaultValue: 'Areas we serve:',

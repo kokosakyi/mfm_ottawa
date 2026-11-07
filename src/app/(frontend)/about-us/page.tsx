@@ -6,7 +6,14 @@ export const metadata: Metadata = {
   title: 'About Us',
 }
 
-export default async function AboutUsPage() {
+interface AboutUsPageProps {
+  searchParams?: Promise<{ lang?: string }>
+}
+
+export default async function AboutUsPage({ searchParams }: AboutUsPageProps) {
+  const params = searchParams ? await searchParams : {}
+  const isFr = params?.lang === 'fr'
+
   const payload = await getPayloadClient()
 
   const [aboutPage, ministriesResult] = await Promise.all([
@@ -22,6 +29,22 @@ export default async function AboutUsPage() {
   const paragraphs = aboutPage.paragraphs || []
   const beliefs = aboutPage.beliefs || []
   const missions = aboutPage.missions || []
+
+  const heading =
+    (isFr ? (aboutPage as any).headingFr : aboutPage.heading) || 'About Us'
+
+  const ministriesHeading =
+    (isFr
+      ? (aboutPage as any).ministriesHeadingFr
+      : aboutPage.ministriesHeading) || 'Ministries & Departments'
+
+  const beliefsHeading =
+    (isFr ? (aboutPage as any).beliefsHeadingFr : aboutPage.beliefsHeading) ||
+    'What We Believe'
+
+  const missionHeading =
+    (isFr ? (aboutPage as any).missionHeadingFr : aboutPage.missionHeading) ||
+    'Our Mission + Vision'
 
   return (
     <div className="content">
@@ -42,14 +65,15 @@ export default async function AboutUsPage() {
       )}
 
       <section className="about-us">
-        <h2>{aboutPage.heading || 'About Us'}</h2>
-        {paragraphs.map((p, idx) => (
-          <div key={p.id || idx}>{p.text}</div>
-        ))}
+        <h2>{heading}</h2>
+        {paragraphs.map((p: any, idx: number) => {
+          const text = (isFr && p.textFr) ? p.textFr : p.text
+          return <div key={p.id || idx}>{text}</div>
+        })}
       </section>
 
       <section className="ministries">
-        <h3>{aboutPage.ministriesHeading || 'Ministries & Departments'}</h3>
+        <h3>{ministriesHeading}</h3>
         <div className="ministries-list">
           {ministriesResult.docs.map((ministry) => (
             <div key={ministry.id} className="ministry-info">
@@ -67,23 +91,25 @@ export default async function AboutUsPage() {
       </section>
 
       <section className="believes">
-        <h3>{aboutPage.beliefsHeading || 'What We Believe'}</h3>
+        <h3>{beliefsHeading}</h3>
         <div>
           <ul className="custom-ul">
-            {beliefs.map((b, idx) => (
-              <li key={b.id || idx}>{b.item}</li>
-            ))}
+            {beliefs.map((b: any, idx: number) => {
+              const item = (isFr && b.itemFr) ? b.itemFr : b.item
+              return <li key={b.id || idx}>{item}</li>
+            })}
           </ul>
         </div>
       </section>
 
       <section className="mission-vision">
-        <h3>{aboutPage.missionHeading || 'Our Mission + Vision'}</h3>
+        <h3>{missionHeading}</h3>
         <div>
           <ul className="custom-ul">
-            {missions.map((m, idx) => (
-              <li key={m.id || idx}>{m.item}</li>
-            ))}
+            {missions.map((m: any, idx: number) => {
+              const item = (isFr && m.itemFr) ? m.itemFr : m.item
+              return <li key={m.id || idx}>{item}</li>
+            })}
           </ul>
         </div>
       </section>

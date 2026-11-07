@@ -26,9 +26,17 @@ export const AboutPage: GlobalConfig = {
       defaultValue: 'About Us',
     },
     {
+      name: 'headingFr',
+      type: 'text',
+      defaultValue: 'À propos de nous',
+    },
+    {
       name: 'paragraphs',
       type: 'array',
-      fields: [{ name: 'text', type: 'textarea', required: true }],
+      fields: [
+        { name: 'text', type: 'textarea', required: true },
+        { name: 'textFr', type: 'textarea' },
+      ],
     },
     {
       name: 'ministriesHeading',
@@ -36,14 +44,27 @@ export const AboutPage: GlobalConfig = {
       defaultValue: 'Ministries & Departments',
     },
     {
+      name: 'ministriesHeadingFr',
+      type: 'text',
+      defaultValue: 'Ministères et départements',
+    },
+    {
       name: 'beliefsHeading',
       type: 'text',
       defaultValue: 'What We Believe',
     },
     {
+      name: 'beliefsHeadingFr',
+      type: 'text',
+      defaultValue: 'Ce que nous croyons',
+    },
+    {
       name: 'beliefs',
       type: 'array',
-      fields: [{ name: 'item', type: 'textarea', required: true }],
+      fields: [
+        { name: 'item', type: 'textarea', required: true },
+        { name: 'itemFr', type: 'textarea' },
+      ],
     },
     {
       name: 'missionHeading',
@@ -51,9 +72,17 @@ export const AboutPage: GlobalConfig = {
       defaultValue: 'Our Mission + Vision',
     },
     {
+      name: 'missionHeadingFr',
+      type: 'text',
+      defaultValue: 'Notre mission et vision',
+    },
+    {
       name: 'missions',
       type: 'array',
-      fields: [{ name: 'item', type: 'textarea', required: true }],
+      fields: [
+        { name: 'item', type: 'textarea', required: true },
+        { name: 'itemFr', type: 'textarea' },
+      ],
     },
   ],
 }

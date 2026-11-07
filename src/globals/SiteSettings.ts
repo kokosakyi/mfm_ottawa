@@ -112,12 +112,19 @@ export const SiteSettings: GlobalConfig = {
       name: 'privacyBanner',
       type: 'group',
       fields: [
-        { name: 'enabled', type: 'checkbox', defaultValue: true },
+        { name: 'enabled', type: 'checkbox', defaultValue: false },
         { name: 'prefixText', type: 'text', defaultValue: 'By using this site, you agree to our ' },
         { name: 'policyLinkText', type: 'text', defaultValue: 'Privacy Policy' },
         { name: 'policyUrl', type: 'text', defaultValue: '/privacy-policy' },
         { name: 'acceptButtonText', type: 'text', defaultValue: 'Accept' },
       ],
+    },
+    {
+      name: 'membershipFormUrl',
+      type: 'text',
+      label: 'Online Membership Form URL',
+      defaultValue:
+        'https://docs.google.com/forms/d/1a_y05cJzePeBp6t8NAtR9WlpwjsbWYjHyes0q5AWKc0/viewform',
     },
     {
       name: 'donatePage',

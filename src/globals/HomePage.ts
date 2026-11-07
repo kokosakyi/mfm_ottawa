@@ -11,6 +11,42 @@ export const HomePage: GlobalConfig = {
   },
   fields: [
     {
+      name: 'visitorStrip',
+      type: 'group',
+      fields: [
+        { name: 'serviceName', type: 'text', defaultValue: 'Sunday Service' },
+        { name: 'serviceNameFr', type: 'text', defaultValue: 'Culte du dimanche' },
+        {
+          name: 'serviceTime',
+          type: 'text',
+          defaultValue: '10:00 AM — In-Person & Online',
+        },
+        {
+          name: 'serviceTimeFr',
+          type: 'text',
+          defaultValue: '10h00 — En personne et en ligne',
+        },
+        { name: 'sanctuaryLabel', type: 'text', defaultValue: 'Sanctuary Location' },
+        { name: 'sanctuaryLabelFr', type: 'text', defaultValue: 'Notre sanctuaire' },
+        {
+          name: 'sanctuaryAddress',
+          type: 'text',
+          defaultValue: '2723 Lancaster Rd, Suite 101, Ottawa',
+        },
+        {
+          name: 'watchLiveUrl',
+          type: 'text',
+          defaultValue: 'https://www.youtube.com/@mfmottawalive4271/streams',
+        },
+        {
+          name: 'directionsUrl',
+          type: 'text',
+          defaultValue:
+            'https://www.google.com/maps/search/?api=1&query=2723+Lancaster+Road+Suite+101+Ottawa+ON+K1B+0B1',
+        },
+      ],
+    },
+    {
       name: 'donateSection',
       type: 'group',
       fields: [
@@ -50,7 +86,7 @@ export const HomePage: GlobalConfig = {
             { name: 'title', type: 'text', defaultValue: '(General Overseer, MFM Worldwide)' },
             { name: 'spouseName', type: 'text', defaultValue: 'Pastor (Mrs.) Shade Olukoya' },
             { name: 'image', type: 'upload', relationTo: 'media' },
-            { name: 'imageUrl', type: 'text', defaultValue: '/assets/home/gen_overseer.jpg' },
+            { name: 'imageUrl', type: 'text', defaultValue: '/assets/home/dr_olukoya_and_wife.jpeg' },
           ],
         },
         {

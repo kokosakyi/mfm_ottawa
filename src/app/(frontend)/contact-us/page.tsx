@@ -6,7 +6,26 @@ export const metadata: Metadata = {
   title: 'Contact Us',
 }
 
-export default function ContactUsPage() {
+interface ContactUsPageProps {
+  searchParams: Promise<{
+    subject?: string
+    message?: string
+    book?: string
+  }>
+}
+
+export default async function ContactUsPage({
+  searchParams,
+}: ContactUsPageProps) {
+  const params = await searchParams
+  const defaultSubject =
+    params.subject || (params.book ? `Book Request: ${params.book}` : '')
+  const defaultMessage =
+    params.message ||
+    (params.book
+      ? `Hello, I would like to request/order "${params.book}". Please let me know the availability and payment details.`
+      : '')
+
   return (
     <div className="content">
       <article>
@@ -15,7 +34,10 @@ export default function ContactUsPage() {
         </header>
 
         <div className="entry-content">
-          <ContactForm />
+          <ContactForm
+            defaultSubject={defaultSubject}
+            defaultMessage={defaultMessage}
+          />
         </div>
       </article>
     </div>

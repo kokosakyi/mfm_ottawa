@@ -5,6 +5,17 @@ import { HeroSlider, type HeroSlideItem } from './HeroSlider'
 interface HomeViewProps {
   locale: 'en' | 'fr'
   slides: HeroSlideItem[]
+  visitorStrip?: {
+    serviceName?: string | null
+    serviceNameFr?: string | null
+    serviceTime?: string | null
+    serviceTimeFr?: string | null
+    sanctuaryLabel?: string | null
+    sanctuaryLabelFr?: string | null
+    sanctuaryAddress?: string | null
+    watchLiveUrl?: string | null
+    directionsUrl?: string | null
+  }
   donateSection: {
     heading?: string | null
     headingFr?: string | null
@@ -62,6 +73,7 @@ interface HomeViewProps {
 export function HomeView({
   locale,
   slides,
+  visitorStrip,
   donateSection,
   leadershipSection,
   verseOfTheDay,
@@ -72,9 +84,38 @@ export function HomeView({
   const lat = visitSection.latitude ?? 45.397784
   const lng = visitSection.longitude ?? -75.607384
   const mapEmbedUrl = `https://maps.google.com/maps?q=${lat},${lng}&hl=${locale}&z=15&output=embed`
-  const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    '2723 Lancaster Road Suite 101 Ottawa ON K1B 0B1',
-  )}`
+
+  const activeAddress =
+    (isFr ? visitSection.addressFr : visitSection.address) ||
+    visitorStrip?.sanctuaryAddress ||
+    '2723 Lancaster Road Suite 101 Ottawa ON K1B 0B1'
+
+  const directionsUrl =
+    visitorStrip?.directionsUrl ||
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      activeAddress,
+    )}`
+
+  const serviceName =
+    (isFr ? visitorStrip?.serviceNameFr : visitorStrip?.serviceName) ||
+    (isFr ? 'Culte du dimanche' : 'Sunday Service')
+
+  const serviceTime =
+    (isFr ? visitorStrip?.serviceTimeFr : visitorStrip?.serviceTime) ||
+    (isFr
+      ? '10h00 — En personne et en ligne'
+      : '10:00 AM — In-Person & Online')
+
+  const sanctuaryLabel =
+    (isFr ? visitorStrip?.sanctuaryLabelFr : visitorStrip?.sanctuaryLabel) ||
+    (isFr ? 'Notre sanctuaire' : 'Sanctuary Location')
+
+  const sanctuaryAddress =
+    visitorStrip?.sanctuaryAddress || activeAddress
+
+  const liveUrl =
+    visitorStrip?.watchLiveUrl ||
+    'https://www.youtube.com/@mfmottawalive4271/streams'
 
   return (
     <>
@@ -86,23 +127,15 @@ export function HomeView({
       >
         <div className="mfm-visitor-strip__inner">
           <div className="mfm-visitor-strip__item">
-            <span className="mfm-visitor-strip__label">
-              {isFr ? 'Culte du dimanche' : 'Sunday Service'}
-            </span>
-            <strong className="mfm-visitor-strip__value">
-              {isFr ? '10h00 — En personne et en ligne' : '10:00 AM — In-Person & Online'}
-            </strong>
+            <span className="mfm-visitor-strip__label">{serviceName}</span>
+            <strong className="mfm-visitor-strip__value">{serviceTime}</strong>
           </div>
 
           <div className="mfm-visitor-strip__divider" aria-hidden="true" />
 
           <div className="mfm-visitor-strip__item">
-            <span className="mfm-visitor-strip__label">
-              {isFr ? 'Notre sanctuaire' : 'Sanctuary Location'}
-            </span>
-            <strong className="mfm-visitor-strip__value">
-              2723 Lancaster Rd, Suite 101, Ottawa
-            </strong>
+            <span className="mfm-visitor-strip__label">{sanctuaryLabel}</span>
+            <strong className="mfm-visitor-strip__value">{sanctuaryAddress}</strong>
           </div>
 
           <div className="mfm-visitor-strip__actions">
@@ -115,7 +148,7 @@ export function HomeView({
               {isFr ? 'Itinéraire' : 'Plan a Visit'}
             </a>
             <a
-              href="https://www.youtube.com/@mfmottawalive4271/streams"
+              href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="mfm-visitor-strip__btn mfm-visitor-strip__btn--outline"
@@ -263,8 +296,7 @@ export function HomeView({
         <div id="map" className="mfm-map-container">
           <div className="mfm-map-card">
             <strong>MFM Ottawa</strong>
-            <div>2723 Lancaster Road - Suite 101</div>
-            <div>Ottawa, ON K1B 0B1</div>
+            <div>{activeAddress}</div>
             <div style={{ marginTop: '0.5rem' }}>
               <a
                 href={directionsUrl}

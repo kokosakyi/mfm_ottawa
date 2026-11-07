@@ -11,7 +11,15 @@ const initialState: ContactActionState = {
   message: '',
 }
 
-export function ContactForm() {
+interface ContactFormProps {
+  defaultSubject?: string
+  defaultMessage?: string
+}
+
+export function ContactForm({
+  defaultSubject = '',
+  defaultMessage = '',
+}: ContactFormProps) {
   const [state, formAction, isPending] = useActionState(
     submitContactForm,
     initialState,
@@ -84,6 +92,7 @@ export function ContactForm() {
             type="text"
             required
             maxLength={400}
+            defaultValue={defaultSubject}
             className="wpcf7-form-control"
           />
         </span>
@@ -100,6 +109,7 @@ export function ContactForm() {
             rows={10}
             required
             maxLength={2000}
+            defaultValue={defaultMessage}
             className="wpcf7-form-control"
           />
         </span>

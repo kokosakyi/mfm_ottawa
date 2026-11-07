@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Lato, Oswald } from 'next/font/google'
 import React from 'react'
 import { NotificationBar } from '@/components/NotificationBar'
-import { PrivacyPopup } from '@/components/PrivacyPopup'
 import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader, type NavItem } from '@/components/SiteHeader'
 import { getPayloadClient, resolveMediaUrl } from '@/lib/payload'
@@ -123,6 +122,12 @@ export default async function FrontendLayout({
             designerUrl={
               settings.footer?.designerUrl || 'http://www.conradkyei.com/home'
             }
+            privacyPolicyText={
+              settings.privacyBanner?.policyLinkText || 'Privacy Policy'
+            }
+            privacyPolicyUrl={
+              settings.privacyBanner?.policyUrl || '/privacy-policy'
+            }
             socialLinks={{
               facebook:
                 settings.footer?.socialLinks?.facebook ||
@@ -133,21 +138,6 @@ export default async function FrontendLayout({
               twitter: settings.footer?.socialLinks?.twitter || '#',
               instagram: settings.footer?.socialLinks?.instagram || '#',
             }}
-          />
-
-          <PrivacyPopup
-            enabled={settings.privacyBanner?.enabled ?? true}
-            prefixText={
-              settings.privacyBanner?.prefixText ||
-              'By using this site, you agree to our '
-            }
-            policyLinkText={
-              settings.privacyBanner?.policyLinkText || 'Privacy Policy'
-            }
-            policyUrl={settings.privacyBanner?.policyUrl || '/privacy-policy'}
-            acceptButtonText={
-              settings.privacyBanner?.acceptButtonText || 'Accept'
-            }
           />
         </div>
       </body>

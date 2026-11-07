@@ -350,6 +350,54 @@ export const SEED_BOOKS = [
 
 export const SEED_EVENTS = [
   {
+    title: 'Sunday Revival & Miracle Service',
+    slug: 'sunday-revival-miracle-service-2026',
+    startDate: '2026-11-08T15:00:00.000Z',
+    endDate: '2026-11-08T17:30:00.000Z',
+    dateTimeDisplay: 'November 8, 2026 @ 10:00 am - 12:30 pm',
+    venueName: 'MFM Ottawa',
+    venueAddress: '2723 Lancaster Road, Ottawa',
+    description:
+      'Join us for an uplifting Sunday service with aggressive warfare prayers, divine praise, and life-changing prophetic ministry.',
+    statusType: 'upcoming' as const,
+  },
+  {
+    title: 'Monthly Deliverance Program / Délivrance mensuelle',
+    slug: 'monthly-deliverance-program-nov-2026',
+    startDate: '2026-11-23T19:00:00.000Z',
+    endDate: '2026-11-27T21:00:00.000Z',
+    dateTimeDisplay: 'November 23, 2026 @ 7:00 pm - November 27, 2026 @ 9:00 pm',
+    venueName: 'MFM Ottawa',
+    venueAddress: '2723 Lancaster Road, Ottawa',
+    description:
+      'Join us every last week of the month at 2723 Lancaster Road, Ottawa from 7pm to 9pm each day. Please fast each day prior to coming for the prayer sessions. God bless you.',
+    statusType: 'upcoming' as const,
+  },
+  {
+    title: 'Power Must Change Hands (PMCH) - December 2026',
+    slug: 'pmch-december-2026',
+    startDate: '2026-12-05T13:00:00.000Z',
+    endDate: '2026-12-05T16:00:00.000Z',
+    dateTimeDisplay: 'December 5, 2026 @ 8:00 am - 11:00 am',
+    venueName: 'MFM Ottawa',
+    venueAddress: '2723 Lancaster Road, Ottawa',
+    description:
+      'Join us every first Saturday of the month at 2723 Lancaster Road, Ottawa from 8am for targeted deliverance prayers.',
+    statusType: 'upcoming' as const,
+  },
+  {
+    title: 'Cross-Over Service into 2027',
+    slug: 'crossover-service-2026-2027',
+    startDate: '2026-12-31T21:00:00.000Z',
+    endDate: '2027-01-01T01:00:00.000Z',
+    dateTimeDisplay: 'December 31, 2026 @ 9:00 pm - January 1, 2027 @ 1:00 am',
+    venueName: 'MFM Ottawa',
+    venueAddress: '2723 Lancaster Road, Ottawa',
+    description:
+      'Crossover into 2027 with violent prayers, midnight prophetic decrees, and holy thanksgiving.',
+    statusType: 'upcoming' as const,
+  },
+  {
     title: 'PMCH',
     slug: 'pmch-19',
     startDate: '2024-12-07T08:00:00.000Z',

@@ -24,8 +24,25 @@ export function SiteHeader({ siteName, logoUrl, navigation }: SiteHeaderProps) {
   const toggleBtnRef = useRef<HTMLButtonElement>(null)
   const closeBtnRef = useRef<HTMLButtonElement>(null)
 
-  const isFrench = pathname === '/accueil' || pathname.startsWith('/accueil/')
+  const isFrench =
+    pathname === '/accueil' ||
+    pathname.startsWith('/accueil/') ||
+    pathname === '/donnez'
   const isHomeHeader = pathname === '/' || pathname === '/home' || isFrench
+
+  let enHref = '/'
+  let frHref = '/accueil'
+
+  if (pathname === '/donate' || pathname === '/donnez') {
+    enHref = '/donate'
+    frHref = '/donnez'
+  } else if (pathname === '/about-us') {
+    enHref = '/about-us'
+    frHref = '/about-us?lang=fr'
+  } else if (pathname === '/books') {
+    enHref = '/books?lang=en'
+    frHref = '/books?lang=fr'
+  }
 
   useEffect(() => {
     setMobileOpen(false)
@@ -61,10 +78,10 @@ export function SiteHeader({ siteName, logoUrl, navigation }: SiteHeaderProps) {
   return (
     <header className={isHomeHeader ? 'home-header' : 'pages-header'}>
       <div className="language-select" aria-label="Language switcher">
-        <Link href="/" aria-current={!isFrench ? 'page' : undefined}>
+        <Link href={enHref} aria-current={!isFrench ? 'page' : undefined}>
           EN
         </Link>
-        <Link href="/accueil" aria-current={isFrench ? 'page' : undefined}>
+        <Link href={frHref} aria-current={isFrench ? 'page' : undefined}>
           FR
         </Link>
       </div>
