@@ -2251,24 +2251,26 @@ dialog.mfm-lightbox::backdrop {
 footer {
   background: linear-gradient(180deg, var(--mfm-plum) 0%, var(--mfm-plum-dark) 100%);
   border-top: 4px solid var(--mfm-amber);
-  padding: 5.5rem 3rem 4.5rem;
+  padding: 6.5rem 3rem 6rem;
   color: #fff;
   font-size: 1.55rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2.4rem;
+  gap: 3rem;
 }
 
 footer .social-media {
-  padding: 0.4rem 0;
+  padding: 0.6rem 0;
+  margin-top: 0.8rem;
+  margin-bottom: 0.5rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.4rem;
 }
 
 .btn-social {
@@ -2379,6 +2381,8 @@ footer .copy-right {
   align-items: center;
   font-size: 1.4rem;
   color: rgba(255, 255, 255, 0.78);
+  margin-top: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 #privacy-popup {
