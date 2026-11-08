@@ -157,8 +157,6 @@ export function SiteFooter({
               {designerName}
             </a>
           </span>
-          <span aria-hidden="true">·</span>
-          <Link href="/admin">CMS Admin</Link>
         </div>
       </div>
     </footer>

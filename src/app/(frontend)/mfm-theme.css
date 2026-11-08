@@ -2251,14 +2251,14 @@ dialog.mfm-lightbox::backdrop {
 footer {
   background: linear-gradient(180deg, var(--mfm-plum) 0%, var(--mfm-plum-dark) 100%);
   border-top: 4px solid var(--mfm-amber);
-  padding: 4rem 2.4rem 3.2rem;
+  padding: 5.5rem 3rem 4.5rem;
   color: #fff;
   font-size: 1.55rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.6rem;
+  gap: 2.4rem;
 }
 
 footer .social-media {
