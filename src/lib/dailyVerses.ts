@@ -123,13 +123,37 @@ export const CURATED_DAILY_VERSES: DailyVerse[] = [
 
 function cleanHtml(raw: string): string {
   return raw
+    .replace(/<br\s*[\/]?>/gi, ' ')
     .replace(/<[^>]+>/g, '')
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ')
     .trim()
+}
+
+function extractVerseText(html: string): string | null {
+  const marker = '<span class="v1">'
+  const start = html.indexOf(marker)
+  if (start === -1) return null
+
+  const contentStart = start + marker.length
+  // On dailyverses.net the verse block is followed by <div class="vr">
+  const endMarker = '<div class="vr">'
+  const end = html.indexOf(endMarker, contentStart)
+  if (end === -1) {
+    const vMatch = html.match(/<span class="v1">([\s\S]*?)<\/span>/)
+    return vMatch && vMatch[1] ? cleanHtml(vMatch[1]) : null
+  }
+
+  let snippet = html.substring(contentStart, end).trim()
+  if (snippet.endsWith('</span>')) {
+    snippet = snippet.slice(0, -7)
+  }
+
+  return cleanHtml(snippet)
 }
 
 /**
@@ -177,10 +201,10 @@ export async function fetchDailyVersesNet(
 
     if (enRes && enRes.ok) {
       const htmlEn = await enRes.text()
-      const vMatch = htmlEn.match(/<span class="v1">([\s\S]*?)<\/span>/)
+      const extractedEn = extractVerseText(htmlEn)
       const refMatch = htmlEn.match(/<a href="([^"]*)" class="vc">([\s\S]*?)<\/a>/)
-      if (vMatch && vMatch[1]) {
-        textEn = cleanHtml(vMatch[1])
+      if (extractedEn) {
+        textEn = extractedEn
       }
       if (refMatch && refMatch[2]) {
         refEn = cleanHtml(refMatch[2])
@@ -197,10 +221,10 @@ export async function fetchDailyVersesNet(
 
     if (frRes && frRes.ok) {
       const htmlFr = await frRes.text()
-      const vMatchFr = htmlFr.match(/<span class="v1">([\s\S]*?)<\/span>/)
+      const extractedFr = extractVerseText(htmlFr)
       const refMatchFr = htmlFr.match(/<a href="([^"]*)" class="vc">([\s\S]*?)<\/a>/)
-      if (vMatchFr && vMatchFr[1]) {
-        textFr = cleanHtml(vMatchFr[1])
+      if (extractedFr) {
+        textFr = extractedFr
       }
       if (refMatchFr && refMatchFr[2]) {
         refFr = cleanHtml(refMatchFr[2])
