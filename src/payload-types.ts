@@ -245,6 +245,13 @@ export interface Event {
   venueAddress: string;
   description?: string | null;
   statusType?: ('upcoming' | 'past') | null;
+  recurrence?: {
+    isRecurring?: boolean | null;
+    pattern?: ('weekly' | 'biweekly' | 'monthly_nth_day' | 'monthly_day_of_month') | null;
+    dayOfWeek?: ('0' | '1' | '2' | '3' | '4' | '5' | '6') | null;
+    nthWeek?: ('1' | '2' | '3' | '4' | 'last') | null;
+    recurrenceEndDate?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -534,6 +541,15 @@ export interface EventsSelect<T extends boolean = true> {
   venueAddress?: T;
   description?: T;
   statusType?: T;
+  recurrence?:
+    | T
+    | {
+        isRecurring?: T;
+        pattern?: T;
+        dayOfWeek?: T;
+        nthWeek?: T;
+        recurrenceEndDate?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import React from 'react'
 import { getPayloadClient } from '@/lib/payload'
+import { expandEventsForRange, type BaseEventDoc, type ExpandedEventInstance } from '@/lib/eventRecurrence'
 
 export const metadata: Metadata = {
   title: 'Events',
@@ -77,8 +78,8 @@ function createGoogleCalendarUrl(event: {
   title: string
   startDate: string
   endDate?: string | null
-  venueName?: string
-  venueAddress?: string
+  venueName?: string | null
+  venueAddress?: string | null
   description?: string | null
 }) {
   const start = new Date(event.startDate)
@@ -143,19 +144,62 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
     limit: 100,
   })
 
+  const weeks = buildMonthWeeks(targetYear, targetMonth - 1)
+
   const startOfToday = new Date()
   startOfToday.setHours(0, 0, 0, 0)
 
-  // Dynamically calculate upcoming vs past based on date
-  const upcomingEvents: typeof eventsResult.docs = []
-  const pastEvents: typeof eventsResult.docs = []
+  // Expand events (both one-time and recurring)
+  // For the month calendar view, range covers the first and last day shown on the grid
+  const gridFirstCell = weeks[0]?.[0]
+  const lastWeek = weeks[weeks.length - 1]
+  const gridLastCell = lastWeek?.[lastWeek.length - 1]
 
-  for (const ev of eventsResult.docs) {
+  const gridStartDate = gridFirstCell
+    ? new Date(`${gridFirstCell.dateKey}T00:00:00`)
+    : new Date(targetYear, targetMonth - 1, 1)
+
+  const gridEndDate = gridLastCell
+    ? new Date(`${gridLastCell.dateKey}T23:59:59`)
+    : new Date(targetYear, targetMonth, 0, 23, 59, 59)
+
+  // For the upcoming list view, expand up to 90 days ahead from today
+  const listAheadDate = new Date(startOfToday)
+  listAheadDate.setDate(listAheadDate.getDate() + 90)
+
+  // Full window that covers both the calendar month and the upcoming 90 days list
+  const windowStart = gridStartDate < startOfToday ? gridStartDate : startOfToday
+  const windowEnd = gridEndDate > listAheadDate ? gridEndDate : listAheadDate
+
+  const allExpanded = expandEventsForRange(
+    eventsResult.docs as unknown as BaseEventDoc[],
+    windowStart,
+    windowEnd,
+  )
+
+  // Separate upcoming vs past for the list
+  const upcomingEvents: ExpandedEventInstance[] = []
+  const pastEvents: ExpandedEventInstance[] = []
+
+  for (const ev of allExpanded) {
     const end = ev.endDate ? new Date(ev.endDate) : new Date(ev.startDate)
     if (end.getTime() >= startOfToday.getTime()) {
       upcomingEvents.push(ev)
-    } else {
-      pastEvents.push(ev)
+    }
+  }
+
+  // Also collect non-recurring past events from raw eventsResult
+  for (const rawEv of eventsResult.docs as unknown as BaseEventDoc[]) {
+    if (!rawEv.recurrence?.isRecurring) {
+      const end = rawEv.endDate ? new Date(rawEv.endDate) : new Date(rawEv.startDate)
+      if (end.getTime() < startOfToday.getTime()) {
+        pastEvents.push({
+          ...rawEv,
+          instanceKey: String(rawEv.id),
+          instanceDateKey: rawEv.startDate.slice(0, 10),
+          isOccurrence: false,
+        })
+      }
     }
   }
 
@@ -164,17 +208,19 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
     (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime(),
   )
 
-  // Map of events by date string (YYYY-MM-DD)
-  const eventsByDate = new Map<string, typeof eventsResult.docs>()
-  for (const ev of eventsResult.docs) {
-    const d = new Date(ev.startDate)
-    const key = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`
+  // Sort past descending (most recent first)
+  pastEvents.sort(
+    (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+  )
+
+  // Map events by date string (YYYY-MM-DD) for the calendar grid
+  const eventsByDate = new Map<string, ExpandedEventInstance[]>()
+  for (const ev of allExpanded) {
+    const key = ev.instanceDateKey
     const existing = eventsByDate.get(key) || []
     existing.push(ev)
     eventsByDate.set(key, existing)
   }
-
-  const weeks = buildMonthWeeks(targetYear, targetMonth - 1)
 
   return (
     <div className="tribe-events-container">
@@ -330,8 +376,8 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
                           <div className="tribe-cal-events-list">
                             {cellEvents.map((ev) => (
                               <a
-                                key={ev.id}
-                                href={`#event-${ev.id}`}
+                                key={ev.instanceKey}
+                                href={`#event-${ev.instanceKey}`}
                                 className="tribe-cal-event-pill"
                                 title={`${ev.title} (${ev.dateTimeDisplay})`}
                               >
@@ -358,7 +404,7 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
             const gcalUrl = createGoogleCalendarUrl(ev)
 
             return (
-              <div key={ev.id} id={`event-${ev.id}`} className="tribe-event-row">
+              <div key={ev.instanceKey} id={`event-${ev.instanceKey}`} className="tribe-event-row">
                 <div className="tribe-event-date-tag" aria-hidden="true">
                   <span className="tribe-event-date-month">
                     {MONTH_SHORT[dt.getUTCMonth()]}
@@ -373,6 +419,21 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
                 <article className="tribe-event-details">
                   <div className="tribe-event-datetime">
                     {ev.dateTimeDisplay}
+                    {ev.recurrence?.isRecurring && (
+                      <span
+                        style={{
+                          marginLeft: '0.8rem',
+                          fontSize: '1.2rem',
+                          fontWeight: 600,
+                          backgroundColor: '#f3e8f8',
+                          color: '#8f0f61',
+                          padding: '0.2rem 0.8rem',
+                          borderRadius: '1rem',
+                        }}
+                      >
+                        Recurring
+                      </span>
+                    )}
                   </div>
                   <h3 className="tribe-event-title">{ev.title}</h3>
                   <address className="tribe-event-venue">
@@ -418,7 +479,7 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
           pastEvents.map((ev) => {
             const dt = new Date(ev.startDate)
             return (
-              <div key={ev.id} id={`event-${ev.id}`} className="tribe-event-row">
+              <div key={ev.instanceKey} id={`event-${ev.instanceKey}`} className="tribe-event-row">
                 <div className="tribe-event-date-tag" aria-hidden="true">
                   <span className="tribe-event-date-month">
                     {MONTH_SHORT[dt.getUTCMonth()]}
